@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:metro_station/stations_page.dart';
+import 'package:metro_station/station_list_screen.dart';
+// <<<<<<< HEAD
+// import 'package:get/get_core/src/get_main.dart';
+// import 'package:get/get_navigation/get_navigation.dart';
+// import 'package:metro_station/stations_page.dart';
+// =======
+// import 'package:get/get.dart';
+// import 'package:metro_station/station_list_screen.dart';
+// >>>>>>> 92494a4f0e4c58609ed8afbea3d5443eaca31e97
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -67,7 +75,6 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        // TODO: حط الأكشن هنا
                       },
                       child: const Text(
                         'Confirm',
@@ -90,32 +97,37 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
                     children: [
-                      Text("Count", style: TextStyle(fontSize: 18)),
-                      Text("7", style: TextStyle(fontSize: 18)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Count", style: TextStyle(fontSize: 18)),
+                          Text("7", style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Time", style: TextStyle(fontSize: 18)),
+                          Text("30 min", style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Price", style: TextStyle(fontSize: 18)),
+                          Text("7", style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
                     ],
                   ),
                   SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Time", style: TextStyle(fontSize: 18)),
-                      Text("30 min", style: TextStyle(fontSize: 18)),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Sale", style: TextStyle(fontSize: 18)),
-                      Text("10", style: TextStyle(fontSize: 18)),
-                    ],
-                  ),
                   TextButton(
                     onPressed: () {
-                      Get.to(StationsPage());
+
+                      Get.to(StationListScreen());
+
                     },
                     child: Align(
                       alignment: Alignment.topLeft,
