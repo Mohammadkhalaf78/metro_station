@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 import 'package:metro_station/station_list_screen.dart';
-<<<<<<< HEAD
-// <<<<<<< HEAD
-// import 'package:get/get_core/src/get_main.dart';
-// import 'package:get/get_navigation/get_navigation.dart';
-// import 'package:metro_station/stations_page.dart';
-// =======
-// import 'package:get/get.dart';
-// import 'package:metro_station/station_list_screen.dart';
-// >>>>>>> 92494a4f0e4c58609ed8afbea3d5443eaca31e97
-=======
 import 'package:metro_station/metro_controller.dart';
->>>>>>> 4da212c (Last Changes)
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -98,12 +86,7 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-<<<<<<< HEAD
-                      onPressed: () {
-                      },
-=======
                       onPressed: () => c.compute(),
->>>>>>> 4da212c (Last Changes)
                       child: const Text(
                         'Confirm',
                         style: TextStyle(
@@ -114,50 +97,48 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 32),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Trip details",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 23,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Obx(() => Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Count", style: TextStyle(fontSize: 18)),
-                          Text("${c.stops.value}", style: TextStyle(fontSize: 18)),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Time", style: TextStyle(fontSize: 18)),
-                          Text("${c.etaMin.value} min", style: TextStyle(fontSize: 18)),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Price", style: TextStyle(fontSize: 18)),
-                          Text("${c.priceEg.value}", style: TextStyle(fontSize: 18)),
-                        ],
-                      ),
-                    ],
-                  )),
+                  Obx(() {
+                    if (c.path.isEmpty) return const SizedBox.shrink();
+                    return Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Trip details",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Count", style: TextStyle(fontSize: 18)),
+                            Text("${c.stops.value}", style: TextStyle(fontSize: 18)),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Time", style: TextStyle(fontSize: 18)),
+                            Text("${c.etaMin.value} min", style: TextStyle(fontSize: 18)),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Price", style: TextStyle(fontSize: 18)),
+                            Text("${c.priceEg.value}", style: TextStyle(fontSize: 18)),
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
                   SizedBox(height: 16),
                   TextButton(
                     onPressed: () {
-<<<<<<< HEAD
-
-                      Get.to(StationListScreen());
-
-=======
                       if (c.path.isEmpty) {
                         Get.snackbar('Validation', 'Please compute a route first', snackPosition: SnackPosition.BOTTOM);
                         return;
@@ -169,7 +150,6 @@ class HomePage extends StatelessWidget {
                         estimatedMinutes: c.etaMin.value,
                         price: c.priceEg.value,
                       ));
->>>>>>> 4da212c (Last Changes)
                     },
                     child: Align(
                       alignment: Alignment.topLeft,
