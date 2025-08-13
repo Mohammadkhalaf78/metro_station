@@ -115,6 +115,42 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Nearby",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: Icon(Icons.train, color: Colors.black,size: 22,),
+                    label: Text(
+                      'Nearest Station',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[200],
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ),
+                
+                
               ],
             ),
           ),
