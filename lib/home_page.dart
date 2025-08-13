@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:metro_station/station_list_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -111,7 +113,9 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(StationListScreen());
+                    },
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
