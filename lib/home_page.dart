@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                     DropdownMenuEntry(value: "world", label: "World"),
                   ],
                 ),
-              SizedBox(height: 22,),
+                SizedBox(height: 22),
                 SizedBox(
                   width: double.infinity,
                   height: 48,
@@ -70,6 +70,48 @@ class HomePage extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 32),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Trip datails ",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Count", style: TextStyle(fontSize: 18)),
+                    Text("7", style: TextStyle(fontSize: 18)),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Time", style: TextStyle(fontSize: 18)),
+                    Text("30 min", style: TextStyle(fontSize: 18)),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Sale", style: TextStyle(fontSize: 18)),
+                    Text("10", style: TextStyle(fontSize: 18)),
+                  ],
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "More",
+                      style: TextStyle(fontSize: 18, color: Colors.blue),
                     ),
                   ),
                 ),
