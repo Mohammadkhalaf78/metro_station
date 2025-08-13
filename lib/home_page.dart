@@ -89,29 +89,32 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
                     children: [
-                      Text("Count", style: TextStyle(fontSize: 18)),
-                      Text("7", style: TextStyle(fontSize: 18)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Count", style: TextStyle(fontSize: 18)),
+                          Text("7", style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Time", style: TextStyle(fontSize: 18)),
+                          Text("30 min", style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Price", style: TextStyle(fontSize: 18)),
+                          Text("7", style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
                     ],
                   ),
                   SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Time", style: TextStyle(fontSize: 18)),
-                      Text("30 min", style: TextStyle(fontSize: 18)),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Sale", style: TextStyle(fontSize: 18)),
-                      Text("10", style: TextStyle(fontSize: 18)),
-                    ],
-                  ),
                   TextButton(
                     onPressed: () {
                       Get.to(StationListScreen());
