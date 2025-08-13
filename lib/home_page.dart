@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:metro_station/station_list_screen.dart';
+<<<<<<< HEAD
 // <<<<<<< HEAD
 // import 'package:get/get_core/src/get_main.dart';
 // import 'package:get/get_navigation/get_navigation.dart';
@@ -10,12 +11,16 @@ import 'package:metro_station/station_list_screen.dart';
 // import 'package:get/get.dart';
 // import 'package:metro_station/station_list_screen.dart';
 // >>>>>>> 92494a4f0e4c58609ed8afbea3d5443eaca31e97
+=======
+import 'package:metro_station/metro_controller.dart';
+>>>>>>> 4da212c (Last Changes)
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final c = Get.put(MetroController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -36,14 +41,24 @@ class HomePage extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: DropdownMenu(
-                          width: double.infinity,
-                          hintText: "Select your station",
-
-                          dropdownMenuEntries: [
-                            DropdownMenuEntry(value: "hello", label: "Hello"),
-                            DropdownMenuEntry(value: "world", label: "World"),
-                          ],
+                        child: Autocomplete<String>(
+                          optionsBuilder: (TextEditingValue text) {
+                            if (text.text.isEmpty) {
+                              return c.stations;
+                            }
+                            return c.stations.where((s) => s.toLowerCase().contains(text.text.toLowerCase()));
+                          },
+                          initialValue: TextEditingValue(text: c.start.value ?? ''),
+                          onSelected: (v) => c.setStart(v),
+                          fieldViewBuilder: (context, controller, focus, onSubmit) {
+                            controller.text = c.start.value ?? '';
+                            return TextField(
+                              controller: controller,
+                              focusNode: focus,
+                              decoration: const InputDecoration(hintText: 'Select or type your station'),
+                              onChanged: (v) => c.setStart(v),
+                            );
+                          },
                         ),
                       ),
                       IconButton(
@@ -54,13 +69,22 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 22),
-                  DropdownMenu(
-                    hintText: "Select end station",
-                    width: double.infinity,
-                    dropdownMenuEntries: [
-                      DropdownMenuEntry(value: "hello", label: "Hello"),
-                      DropdownMenuEntry(value: "world", label: "World"),
-                    ],
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue text) {
+                      if (text.text.isEmpty) return c.stations;
+                      return c.stations.where((s) => s.toLowerCase().contains(text.text.toLowerCase()));
+                    },
+                    initialValue: TextEditingValue(text: c.end.value ?? ''),
+                    onSelected: (v) => c.setEnd(v),
+                    fieldViewBuilder: (context, controller, focus, onSubmit) {
+                      controller.text = c.end.value ?? '';
+                      return TextField(
+                        controller: controller,
+                        focusNode: focus,
+                        decoration: const InputDecoration(hintText: 'Select or type end station'),
+                        onChanged: (v) => c.setEnd(v),
+                      );
+                    },
                   ),
                   SizedBox(height: 22),
                   SizedBox(
@@ -68,14 +92,18 @@ class HomePage extends StatelessWidget {
                     height: 48,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue, // خلفية زرقاء
-                        foregroundColor: Colors.white, // نص أبيض
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8), // زوايا ناعمة
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
+<<<<<<< HEAD
                       onPressed: () {
                       },
+=======
+                      onPressed: () => c.compute(),
+>>>>>>> 4da212c (Last Changes)
                       child: const Text(
                         'Confirm',
                         style: TextStyle(
@@ -89,7 +117,7 @@ class HomePage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Trip datails ",
+                      "Trip details",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 23,
@@ -97,37 +125,51 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-                  Column(
+                  Obx(() => Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Count", style: TextStyle(fontSize: 18)),
-                          Text("7", style: TextStyle(fontSize: 18)),
+                          Text("${c.stops.value}", style: TextStyle(fontSize: 18)),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Time", style: TextStyle(fontSize: 18)),
-                          Text("30 min", style: TextStyle(fontSize: 18)),
+                          Text("${c.etaMin.value} min", style: TextStyle(fontSize: 18)),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Price", style: TextStyle(fontSize: 18)),
-                          Text("7", style: TextStyle(fontSize: 18)),
+                          Text("${c.priceEg.value}", style: TextStyle(fontSize: 18)),
                         ],
                       ),
                     ],
-                  ),
+                  )),
                   SizedBox(height: 16),
                   TextButton(
                     onPressed: () {
+<<<<<<< HEAD
 
                       Get.to(StationListScreen());
 
+=======
+                      if (c.path.isEmpty) {
+                        Get.snackbar('Validation', 'Please compute a route first', snackPosition: SnackPosition.BOTTOM);
+                        return;
+                      }
+                      Get.to(StationListScreen(
+                        routeStations: c.path.toList(),
+                        transferSteps: c.transfers.toList(),
+                        stopsCount: c.stops.value,
+                        estimatedMinutes: c.etaMin.value,
+                        price: c.priceEg.value,
+                      ));
+>>>>>>> 4da212c (Last Changes)
                     },
                     child: Align(
                       alignment: Alignment.topLeft,
@@ -174,7 +216,6 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 22),
                   Align(
                     alignment: Alignment.topLeft,
@@ -187,7 +228,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 22),
-
                   TextField(
                     decoration: InputDecoration(
                       hintText: 'Enter place name ',
@@ -195,7 +235,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 22),
-
                   Align(
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
@@ -221,3 +260,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
