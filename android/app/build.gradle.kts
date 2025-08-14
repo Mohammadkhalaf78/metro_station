@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.metro_station"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

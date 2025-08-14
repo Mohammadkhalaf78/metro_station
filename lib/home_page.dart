@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:metro_station/station_list_screen.dart';
 import 'package:metro_station/metro_controller.dart';
@@ -34,19 +35,28 @@ class HomePage extends StatelessWidget {
                             if (text.text.isEmpty) {
                               return c.stations;
                             }
-                            return c.stations.where((s) => s.toLowerCase().contains(text.text.toLowerCase()));
-                          },
-                          initialValue: TextEditingValue(text: c.start.value ?? ''),
-                          onSelected: (v) => c.setStart(v),
-                          fieldViewBuilder: (context, controller, focus, onSubmit) {
-                            controller.text = c.start.value ?? '';
-                            return TextField(
-                              controller: controller,
-                              focusNode: focus,
-                              decoration: const InputDecoration(hintText: 'Select or type your station'),
-                              onChanged: (v) => c.setStart(v),
+                            return c.stations.where(
+                              (s) => s.toLowerCase().contains(
+                                text.text.toLowerCase(),
+                              ),
                             );
                           },
+                          initialValue: TextEditingValue(
+                            text: c.start.value ?? '',
+                          ),
+                          onSelected: (v) => c.setStart(v),
+                          fieldViewBuilder:
+                              (context, controller, focus, onSubmit) {
+                                controller.text = c.start.value ?? '';
+                                return TextField(
+                                  controller: controller,
+                                  focusNode: focus,
+                                  decoration: const InputDecoration(
+                                    hintText: 'Select or type your station',
+                                  ),
+                                  onChanged: (v) => c.setStart(v),
+                                );
+                              },
                         ),
                       ),
                       IconButton(
@@ -60,7 +70,10 @@ class HomePage extends StatelessWidget {
                   Autocomplete<String>(
                     optionsBuilder: (TextEditingValue text) {
                       if (text.text.isEmpty) return c.stations;
-                      return c.stations.where((s) => s.toLowerCase().contains(text.text.toLowerCase()));
+                      return c.stations.where(
+                        (s) =>
+                            s.toLowerCase().contains(text.text.toLowerCase()),
+                      );
                     },
                     initialValue: TextEditingValue(text: c.end.value ?? ''),
                     onSelected: (v) => c.setEnd(v),
@@ -69,7 +82,9 @@ class HomePage extends StatelessWidget {
                       return TextField(
                         controller: controller,
                         focusNode: focus,
-                        decoration: const InputDecoration(hintText: 'Select or type end station'),
+                        decoration: const InputDecoration(
+                          hintText: 'Select or type end station',
+                        ),
                         onChanged: (v) => c.setEnd(v),
                       );
                     },
@@ -116,21 +131,30 @@ class HomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Count", style: TextStyle(fontSize: 18)),
-                            Text("${c.stops.value}", style: TextStyle(fontSize: 18)),
+                            Text(
+                              "${c.stops.value}",
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Time", style: TextStyle(fontSize: 18)),
-                            Text("${c.etaMin.value} min", style: TextStyle(fontSize: 18)),
+                            Text(
+                              "${c.etaMin.value} min",
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Price", style: TextStyle(fontSize: 18)),
-                            Text("${c.priceEg.value}", style: TextStyle(fontSize: 18)),
+                            Text(
+                              "${c.priceEg.value}",
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ],
                         ),
                       ],
@@ -140,16 +164,22 @@ class HomePage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       if (c.path.isEmpty) {
-                        Get.snackbar('Validation', 'Please compute a route first', snackPosition: SnackPosition.BOTTOM);
+                        Get.snackbar(
+                          'Validation',
+                          'Please compute a route first',
+                          snackPosition: SnackPosition.BOTTOM,
+                        );
                         return;
                       }
-                      Get.to(StationListScreen(
-                        routeStations: c.path.toList(),
-                        transferSteps: c.transfers.toList(),
-                        stopsCount: c.stops.value,
-                        estimatedMinutes: c.etaMin.value,
-                        price: c.priceEg.value,
-                      ));
+                      Get.to(
+                        StationListScreen(
+                          routeStations: c.path.toList(),
+                          transferSteps: c.transfers.toList(),
+                          stopsCount: c.stops.value,
+                          estimatedMinutes: c.etaMin.value,
+                          price: c.priceEg.value,
+                        ),
+                      );
                     },
                     child: Align(
                       alignment: Alignment.topLeft,
@@ -239,5 +269,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
 
+
+}
