@@ -7,6 +7,7 @@ import 'package:metro_station/metro_controller.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final nearestStationController = Get.put(NearestStationController());
+  var startStationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +48,10 @@ class HomePage extends StatelessWidget {
                           ),
                           onSelected: (v) => c.setStart(v),
                           fieldViewBuilder:
-                              (context, controller, focus, onSubmit) {
-                                controller.text = c.start.value ?? '';
+                              (context, startStationController, focus, onSubmit) {
+                                startStationController.text = c.start.value ?? '';
                                 return TextField(
-                                  controller: controller,
+                                  controller: startStationController,
                                   focusNode: focus,
                                   decoration: const InputDecoration(
                                     hintText: 'Select or type your station',
@@ -62,7 +63,10 @@ class HomePage extends StatelessWidget {
                       ),
                       IconButton(
                         tooltip: 'Find nearest on Google Maps',
-                        onPressed: () {},
+                        onPressed: () {
+                          String placeName = startStationController.text.trim();
+
+                        },
                         icon: const Icon(Icons.map),
                       ),
                     ],
