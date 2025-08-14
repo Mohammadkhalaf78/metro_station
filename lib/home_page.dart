@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:metro_station/nearest_station_helper.dart';
 import 'package:get/get.dart';
 import 'package:metro_station/station_list_screen.dart';
 import 'package:metro_station/metro_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final nearestStationController = Get.put(NearestStationController());
-  var startStationController = TextEditingController();
+  var controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +50,16 @@ class HomePage extends StatelessWidget {
                           ),
                           onSelected: (v) => c.setStart(v),
                           fieldViewBuilder:
-                              (context, startStationController, focus, onSubmit) {
-                                startStationController.text = c.start.value ?? '';
+                              (
+                                context,
+                                controller,
+                                focus,
+                                onSubmit,
+                              ) {
+                                controller.text =
+                                    c.start.value ?? '';
                                 return TextField(
-                                  controller: startStationController,
+                                  controller: controller,
                                   focusNode: focus,
                                   decoration: const InputDecoration(
                                     hintText: 'Select or type your station',
@@ -63,9 +71,26 @@ class HomePage extends StatelessWidget {
                       ),
                       IconButton(
                         tooltip: 'Find nearest on Google Maps',
-                        onPressed: () {
-                          String placeName = startStationController.text.trim();
-
+                        onPressed: () async {
+                          
+                          String placeName = c.start.value?.trim() ?? "";
+                          if (placeName.isEmpty) {
+                            Get.snackbar("Error", "Please enter a place name");
+                            return;
+                          }
+                          List<Location> locations = await locationFromAddress(
+                            placeName,
+                          );
+                          double lat = locations.first.latitude;
+                          double lng = locations.first.longitude;
+                          String googleUrl =
+                              'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng&travelmode=walking';
+                          if (await canLaunchUrl(Uri.parse(googleUrl))) {
+                            await launchUrl(Uri.parse(googleUrl));
+                          } else {
+                            Get.snackbar("Error", "Could not open Google Maps");
+                          }
+                          
                         },
                         icon: const Icon(Icons.map),
                       ),
