@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:metro_station/nearest_station_helper.dart';
 import 'package:get/get.dart';
 import 'package:metro_station/station_list_screen.dart';
 import 'package:metro_station/metro_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final nearestStationController = Get.put(NearestStationController());
 
   @override
   Widget build(BuildContext context) {
@@ -67,28 +68,41 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 22),
-                  Autocomplete<String>(
-                    optionsBuilder: (TextEditingValue text) {
-                      if (text.text.isEmpty) return c.stations;
-                      return c.stations.where(
-                        (s) =>
-                            s.toLowerCase().contains(text.text.toLowerCase()),
-                      );
-                    },
-                    initialValue: TextEditingValue(text: c.end.value ?? ''),
-                    onSelected: (v) => c.setEnd(v),
-                    fieldViewBuilder: (context, controller, focus, onSubmit) {
-                      controller.text = c.end.value ?? '';
-                      return TextField(
-                        controller: controller,
-                        focusNode: focus,
-                        decoration: const InputDecoration(
-                          hintText: 'Select or type end station',
-                        ),
-                        onChanged: (v) => c.setEnd(v),
-                      );
-                    },
-                  ),
+                  Obx(() {
+                    return Autocomplete<String>(
+                      optionsBuilder: (TextEditingValue text) {
+                        if (text.text.isEmpty) return c.stations;
+                        return c.stations.where(
+                          (s) =>
+                              s.toLowerCase().contains(text.text.toLowerCase()),
+                        );
+                      },
+                      initialValue: TextEditingValue(
+                        text:
+                            c.end.value ??
+                            nearestStationController.nearestStation.value ??
+                            '',
+                      ),
+                      onSelected: (v) => c.setEnd(v),
+                      fieldViewBuilder: (context, controller, focus, onSubmit) {
+                        // تحديث النص تلقائيًا عند تغير أقرب محطة
+                        controller.text =
+                            c.end.value ??
+                            nearestStationController.nearestStation.value ??
+                            '';
+
+                        return TextField(
+                          controller: controller,
+                          focusNode: focus,
+                          decoration: const InputDecoration(
+                            hintText: 'Select or type end station',
+                          ),
+                          onChanged: (v) => c.setEnd(v),
+                        );
+                      },
+                    );
+                  }),
+
                   SizedBox(height: 22),
                   SizedBox(
                     width: double.infinity,
@@ -200,7 +214,9 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   SizedBox(height: 16),
+
                   Align(
                     alignment: Alignment.topLeft,
                     child: ElevatedButton.icon(
@@ -226,6 +242,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   SizedBox(height: 22),
                   Align(
                     alignment: Alignment.topLeft,
@@ -239,6 +256,9 @@ class HomePage extends StatelessWidget {
                   ),
                   SizedBox(height: 22),
                   TextField(
+                    onChanged: (val) =>
+                        nearestStationController.placeName.value = val,
+
                     decoration: InputDecoration(
                       hintText: 'Enter place name ',
                       border: OutlineInputBorder(),
@@ -248,9 +268,9 @@ class HomePage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
-                      onPressed: () {
-                        // Action
-                      },
+                      onPressed: () =>
+                          nearestStationController.findNearestStation(),
+
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         alignment: Alignment.centerLeft,
